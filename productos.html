@@ -9,11 +9,20 @@
     <link rel="stylesheet" href="css/productos.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap" rel="stylesheet"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <body>
     <div class="top">
-        <h1>La Pape</h1>
+        <a href="productos.html"><h1>La Pape</h1></a>
+        <div class="opciones">
+            <i class="fas fa-user"></i>
+            <i class="fas fa-shopping-cart"></i>
+        </div>  
+    </div>
+
+    <div class="shopping-cart">
+
     </div>
 
     <div class="container-fluid contenedor">
@@ -22,6 +31,77 @@
                 <div class="row tarjetas" id="tarjetas">
                     <h1>Productos disponibles</h1>
 
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                        <div class="tarjeta" id="tarjeta1">
+                            <a href="producto.html" class="enlaceProducto">
+                                <input type="hidden" name="" value=1>
+                                <h3 class="nombre">Lápiz no.2</h3>
+                                <img src="img/lapiz.png" alt="" class="imagen">
+                                <label class="costo">$4.00</label>
+                            </a>
+                            <div class="cantidad">
+                                <h4>Cantidad:</h4>
+                                <input type="number" name="" id="" class="cant">
+                            </div>
+                            <button class="boton btnTarjeta">Agregar a carrito</button>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                        <div class="tarjeta" id="tarjeta2">
+                            <a href="producto.html" class="enlaceProducto">
+                                <h3 class="nombre">Lápiz no.3</h3>
+                                <img src="img/lapiz2.png" alt="" class="imagen">
+                                <label class="costo">$20.00</label>
+                            </a>
+                            <div class="cantidad">
+                                <h4>Cantidad:</h4>
+                                <input type="number" name="" id="" class="cant">
+                            </div>
+                            <button class="boton btnTarjeta" >Agregar a carrito</button>
+                        </div>
+                    </div>
+            
+
+
+                    <script>
+                        localStorage.clear();
+
+                        //Agregar funcionalidad a botones de cada tarjeta
+                        let btns = document.getElementsByClassName('btnTarjeta');
+                        for (let index = 0; index < btns.length; index++) {
+                            btns[index].addEventListener('click', agregarCarrito);;
+                        }
+                        
+                        cont = 0;
+                        function agregarCarrito (){
+                            //Obtener div padre (div.tarjeta)
+                            const div = event.target.parentElement;
+                            //Obtener valores de la tarjeta seleccionada
+                            const cantidad = div.getElementsByClassName('cant')[0].value;
+                            if(cantidad>0){
+                                const nombre = div.getElementsByClassName('nombre')[0].innerText;
+                                const imagen = div.getElementsByClassName('imagen')[0].src;
+                                const precio = div.getElementsByClassName('costo')[0].innerText;
+                                cont++;
+                                const id = cont;
+                                let cartItem = {
+                                    id: id,
+                                    nombre: nombre,
+                                    imagen: imagen,
+                                    precio: precio,
+                                    cantidad: cantidad
+                                };
+
+                                
+                                
+                            }
+                            else{
+                                alert('no hay cantidad');
+                            }
+                        }
+
+                    </script>
                 
                 </div>
             </div>
@@ -39,24 +119,48 @@
         data.forEach(element => {
             div.innerHTML += `
                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                    <div class="tarjeta">
-                        <a href="producto.html?e=${element.id}" class="enlaceProducto">
-                            <h3>${element.nombre}</h3>
-                            <img src=${element.imagen} alt="">
+                    <div class="tarjeta" id="tarjeta1">
+                        <a href="producto.html" class="enlaceProducto">
+                            <input type="hidden" class="idProducto" name="" value=${element.id}>
+                            <h3 class="nombre">${element.nombre}</h3>
+                            <img src=${element.imagen} alt="" class="imagen">
                             <label class="costo">$${element.precio}</label>
                         </a>
                         <div class="cantidad">
                             <h4>Cantidad:</h4>
-                            <!-- <label>Ingresa la cantidad a comprar:</label> -->
-                            <input type="number" name="" id="">
+                            <input type="number" name="" id="" class="cant">
                         </div>
-                        <button class="boton">Agregar a carrito</button>
+                        <button class="boton btnTarjeta">Agregar a carrito</button>
                     </div>
                 </div>
             `
         });
     }
 
-    obtenerData(url, 'tarjetas');
+    //obtenerData(url, 'tarjetas');
+
+    //Agregar funcionalidad a botones de cada tarjeta
+    // let btns = document.getElementsByClassName('btnTarjeta');
+    // for (let index = 0; index < btns.length; index++) {
+    //     btns[index].addEventListener('click', agregarCarrito);;
+    // }
+    
+    // cont = 0;
+    // function agregarCarrito (){
+    //     //Obtener div padre (div.tarjeta)
+    //     const div = event.target.parentElement;
+    //     //Obtener valores de la tarjeta seleccionada
+    //     const nombre = div.getElementsByClassName('nombre')[0].innerText;
+    //     const imagen = div.getElementsByClassName('imagen')[0].src;
+    //     const precio = div.getElementsByClassName('costo')[0].innerText;
+    //     const cantidad = div.getElementsByClassName('cant')[0].value;
+    //     cont++;
+    //     const id = cont;
+    //     console.log(id);
+    //     console.log(nombre);
+    //     console.log(imagen);
+    //     console.log(precio);
+    //     console.log(cantidad);
+    // }
 
 </script>
