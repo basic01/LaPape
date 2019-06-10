@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/producto.css">
     <script src="js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap" rel="stylesheet"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -24,33 +25,57 @@
     <div class="container-fluid contenedor">  
         <div class="row">
             <div class="col-lg-12">
-                <div class="row tarjeta">
-                    <div class="col-lg-12 titulo">
-                            <h3>Lápiz no. 2</h3>
-                    </div>
-                    <div class="col-lg-7 col-md-5 col-sm-6">
-                        <div class="div-img">
-                            <img src="img/lapiz.png" alt="">
-                        </div>
-                    </div>
-                    <div class="detalles-tarjeta col-lg-5 col-md-7 col-sm-6">
-                        <h4>Descripción:</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, 
-                            tempore eum repellat quia ipsa neque assumenda quasi impedit voluptate atque.
-                        </p>
-                        <h4>Costo:</h4>
-                        <label id="costo">$4.00</label>
-                        <div class="cantidad">
-                            <h4>Cantidad:</h4>
-                            <!-- <label>Ingresa la cantidad a comprar:</label> -->
-                            <input type="number" name="" id="">
-                        </div>
-                        <!-- <a href="#" class="boton">Agregar a carrito</a> -->
-                        <button class="boton">Agregar a carrito</button>
-                    </div>
+                <div class="row tarjeta" id="tarjeta">
+                    
                 </div>
             </div>
         </div>
     </div>
 </body>
 </html>
+
+<script>
+    let url = 'http://127.0.0.1:8000/productos/';
+    async function getURL(){
+        const url_string = window.location.href;
+        const direccion = new URL(url_string);
+        const e = direccion.searchParams.get('e');
+        url += `${e}/`;
+    }
+
+    async function obtenerData(url, divId){
+        const response = await fetch(url);
+        const element = await response.json();
+        const div = document.getElementById(divId);
+        div.innerHTML += `
+            <div class="col-lg-12 titulo">
+                <h3>${element.nombre}</h3>
+            </div>
+            <div class="col-lg-7 col-md-5 col-sm-6">
+                <div class="div-img">
+                    <img src=${element.imagen} alt="">
+                </div>
+            </div>
+            <div class="detalles-tarjeta col-lg-5 col-md-7 col-sm-6">
+                <h4>Descripción:</h4>
+                <p>${element.descripcion}</p>
+                <h4>Costo:</h4>
+                <label id="costo">$${element.precio}</label>
+                <div class="cantidad">
+                    <h4>Cantidad:</h4>
+                    <!-- <label>Ingresa la cantidad a comprar:</label> -->
+                    <input type="number" name="" id="">
+                </div>
+                <!-- <a href="#" class="boton">Agregar a carrito</a> -->
+                <button class="boton">Agregar a carrito</button>
+            </div>
+
+        `;
+    }
+    
+    getURL();
+    obtenerData(url, 'tarjeta');
+
+
+
+</script>

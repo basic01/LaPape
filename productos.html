@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="css/productos.css">
-    <script src="js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap" rel="stylesheet"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -19,68 +19,44 @@
     <div class="container-fluid contenedor">
         <div class="row">
             <div class="col-lg-12">
-                <div class="row tarjetas">
+                <div class="row tarjetas" id="tarjetas">
                     <h1>Productos disponibles</h1>
 
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                        <div class="tarjeta">
-                            <h3>Lápiz no.2</h3>
-                            <img src="img/lapiz2.png" alt="">
-                            <label class="costo">$4.00</label>
-                            <div class="cantidad">
-                                <h4>Cantidad:</h4>
-                                <!-- <label>Ingresa la cantidad a comprar:</label> -->
-                                <input type="number" name="" id="">
-                            </div>
-                            <button class="boton">Agregar a carrito</button>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                            <div class="tarjeta">
-                                <h3>Lápiz no.2</h3>
-                                <img src="img/lapiz2.png" alt="">
-                                <label class="costo">$4.00</label>
-                                <div class="cantidad">
-                                    <h4>Cantidad:</h4>
-                                    <!-- <label>Ingresa la cantidad a comprar:</label> -->
-                                    <input type="number" name="" id="">
-                                </div>
-                                <button class="boton">Agregar a carrito</button>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                <div class="tarjeta">
-                                    <h3>Lápiz no.2</h3>
-                                    <img src="img/lapiz2.png" alt="">
-                                    <label class="costo">$4.00</label>
-                                    <div class="cantidad">
-                                        <h4>Cantidad:</h4>
-                                        <!-- <label>Ingresa la cantidad a comprar:</label> -->
-                                        <input type="number" name="" id="">
-                                    </div>
-                                    <button class="boton">Agregar a carrito</button>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                    <div class="tarjeta">
-                                        <h3>Lápiz no.2</h3>
-                                        <img src="img/lapiz2.png" alt="">
-                                        <label class="costo">$4.00</label>
-                                        <div class="cantidad">
-                                            <h4>Cantidad:</h4>
-                                            <!-- <label>Ingresa la cantidad a comprar:</label> -->
-                                            <input type="number" name="" id="">
-                                        </div>
-                                        <button class="boton">Agregar a carrito</button>
-                                    </div>
-                                </div>
-                    
+                
                 </div>
             </div>
         </div>
     </div>
 </body>
 </html>
+<script>
+    const url = 'http://127.0.0.1:8000/productos/';
+
+    async function obtenerData (url, divId){
+        const response = await fetch(url);
+        const data = await response.json();
+        const div = document.getElementById(divId);
+        data.forEach(element => {
+            div.innerHTML += `
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                    <div class="tarjeta">
+                        <a href="producto.html?e=${element.id}" class="enlaceProducto">
+                            <h3>${element.nombre}</h3>
+                            <img src=${element.imagen} alt="">
+                            <label class="costo">$${element.precio}</label>
+                        </a>
+                        <div class="cantidad">
+                            <h4>Cantidad:</h4>
+                            <!-- <label>Ingresa la cantidad a comprar:</label> -->
+                            <input type="number" name="" id="">
+                        </div>
+                        <button class="boton">Agregar a carrito</button>
+                    </div>
+                </div>
+            `
+        });
+    }
+
+    obtenerData(url, 'tarjetas');
+
+</script>
