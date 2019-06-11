@@ -110,8 +110,8 @@ span{
 }
 
 .enlaceProducto:hover{
-    background-color: #EBEBED;
-    padding: 7px;
+    /* background-color: #EBEBED; */
+    padding: 5px;
     border-radius: 5px;
     z-index: 1;
 }

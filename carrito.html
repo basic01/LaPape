@@ -7,142 +7,83 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="css/carrito.css">
-    <script src="js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/funciones.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <title>La Pape</title>
 </head>
 <body>
 
     <div class="top">
-        <h1>La Pape</h1>
+        <a href="productos.html"><h1>La Pape</h1></a>
+        <div class="opciones">
+            <i class="fas fa-user"></i>
+            <i class="fas fa-shopping-cart" id="cart-icon" onclick="mostrarEsconder('shopping-cart')"></i>
+        </div>  
+    </div>
+
+    <div class="shopping-cart" id="shopping-cart">
+    <div id="shopping-cart-items">
+        
+    </div>
+
+    <div class="shopping-cart-total">
+        <div class="shopping-cart-total-subtotal total-data">
+            <h4>Subtotal:</h4>
+            <p>$<span id="subtotal">0.00</span></p>
+        </div>
+        <div class="shopping-cart-total-envio total-data">
+            <h4>Envío:</h4>
+            <p>$<span id="envio">0.00</span></p>
+        </div>
+        <div class="shopping-cart-total-total total-data">
+            <h3>Total:</h3>
+            <p>$<span id="total">0.00</span></p>
+        </div>
+        </div>
+        <div class="shopping-cart-options">
+            <button id="clear" class="boton" onclick="vaciarCarrito()">Vaciar</button>
+            <button id="shop" class="boton" onclick="navegarCompra('carrito.html')">Comprar</button>
+        </div>
+
     </div>
 
     <div class="container-fluid contenedor">  
         <div class="row row1">
 
-            <div class="col-xl-1"></div>
+            <div class="col-lg-2 col-md-1"></div>
 
-            <div class="col-xl-7 col-lg-8 col-12">
+            <div class="col-lg-5 col-md-6 col-12">
                 <div class="carrito">
                     <h1>Carrito de compras</h1>
                     <div class="articulos row">
 
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-12">
-                            <div class="articulo row">
-                                <div class="img col-lg-1 col-4">
-                                    <img src="img/lapiz.png" alt="">
-                                </div>
-                                <div class="cont-datos col-lg-9 col-8">
-                                    <div class="datos row">
-                                        <div class="dato col-lg-3 col-12">
-                                            <label>Producto</label>
-                                            <p>Lápiz no.2</p>
-                                        </div>
-                                        <div class="dato col-lg-3 col-12">
-                                            <label>Costo</label>
-                                            <p>Costo: <span>$4.00</span></p>
-                                        </div>
-                                        <div class="dato col-lg-3 col-12">
-                                            <label>Cant.</label>
-                                            <p>Cantidad: <span>2</span> </p>
-                                        </div>
-                                        <div class="dato col-lg-3 col-12">
-                                            <label>Total</label>
-                                            <p>Total: <span>$8.00</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="btn-articulo col-lg-2 col-12">
-                                    <a href="#" class="boton">Eliminar</a>
-                                </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="articulo row" id="items">
+
                             </div>
                         </div>
-
-
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-12">
-                                <div class="articulo row">
-                                    <div class="img col-lg-1 col-4">
-                                        <img src="img/lapiz.png" alt="">
-                                    </div>
-                                    <div class="cont-datos col-lg-9 col-8">
-                                        <div class="datos row">
-                                            <div class="dato col-lg-3 col-12">
-                                                <label>Producto</label>
-                                                <p>Lápiz no.2</p>
-                                            </div>
-                                            <div class="dato col-lg-3 col-12">
-                                                <label>Costo</label>
-                                                <p>Costo: <span>$4.00</span></p>
-                                            </div>
-                                            <div class="dato col-lg-3 col-12">
-                                                <label>Cant.</label>
-                                                <p>Cantidad: <span>2</span> </p>
-                                            </div>
-                                            <div class="dato col-lg-3 col-12">
-                                                <label>Total</label>
-                                                <p>Total: <span>$8.00</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="btn-articulo col-lg-2 col-12">
-                                        <a href="#" class="boton">Eliminar</a>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-12">
-                                    <div class="articulo row">
-                                        <div class="img col-lg-1 col-4">
-                                            <img src="img/lapiz.png" alt="">
-                                        </div>
-                                        <div class="cont-datos col-lg-9 col-8">
-                                            <div class="datos row">
-                                                <div class="dato col-lg-3 col-12">
-                                                    <label>Producto</label>
-                                                    <p>Lápiz no.2</p>
-                                                </div>
-                                                <div class="dato col-lg-3 col-12">
-                                                    <label>Costo</label>
-                                                    <p>Costo: <span>$4.00</span></p>
-                                                </div>
-                                                <div class="dato col-lg-3 col-12">
-                                                    <label>Cant.</label>
-                                                    <p>Cantidad: <span>2</span> </p>
-                                                </div>
-                                                <div class="dato col-lg-3 col-12">
-                                                    <label>Total</label>
-                                                    <p>Total: <span>$8.00</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="btn-articulo col-lg-2 col-12">
-                                            <a href="#" class="boton">Eliminar</a>
-                                        </div>
-                                    </div>
-                                </div>
-
                         
                     </div>  
                 </div>  
             </div>
 
-            <div class="col-xl-3 col-lg-4 col-12">
+            <div class="col-lg-3 col-md-4 col-12">
                 <div class="cuenta">
                     <h1>Pedido</h1>
                     <div class="pedido">
                         <div class="dato-pedido">
                             <label>Subtotal:</label>
-                            <p>$36.00</p>
+                            <p>$<span id="pedido-subtotal">0.00</span></p>
                         </div>
                         <div class="dato-pedido">
                             <label>Envío</label>
-                            <p>$100.00</p>
+                            <p>$<span id="pedido-envio">0.00</span></p>
                         </div>
                         <div class="dato-pedido total">
                             <label>Total</label>
-                            <p>$136.00</p>
+                            <p>$<span id="pedido-total">0.00</span></p>
                         </div>
                         
                         <a href="#" class="boton">Finalizar compra</a>
@@ -156,3 +97,14 @@
     </div>
 </body>
 </html>
+
+<script>
+    async function work(){
+        await obtenerItemsCarrito();
+        await mostrarItems();
+        await mostrarTotales('pedido-subtotal', 'pedido-envio', 'pedido-total');
+    }
+    
+    work();
+
+</script>

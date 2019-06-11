@@ -21,7 +21,7 @@
 }
 
 .articulos{
-    padding:.5em 1.5em;
+    padding-left: .5em;
     /* padding-left: calc(1.5em + 5px); */
     border-radius: 5px;
     margin-bottom: 1em;
@@ -48,9 +48,11 @@
 }
 
 .img img{
-    width: 100%;
-    border-radius: 2px;
+    width: 5em;
+    height: 5em;
+    border-radius: 50%;
     object-fit: cover;
+    border: 1px solid rgba(0,0,0,.5);
 }
 
 .btn-articulo, .dato, .cont-datos{
@@ -58,6 +60,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-left: 2.5em;
 }
 
 .cont-datos{
@@ -65,7 +68,7 @@
 }
 
 .datos{
-    width: 100%;
+    float: left;
     padding: 0;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -135,4 +138,17 @@
     padding-top: 1em;
     padding-bottom: 1em;
     font-size: 1.2em;
+}
+
+/* Nuevo css */
+
+#items .shopping-cart-item-cantidad{
+    float: left;
+    margin-right: 0;
+    width: 100%;
+}
+
+#items .eliminarItem{
+    font-size: 1.4em;
+    margin-left: 0;
 }
