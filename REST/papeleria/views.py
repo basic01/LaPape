@@ -1,5 +1,5 @@
 from .models import Producto, Usuario, Direccion, Compra
-from .serializer import ProductoSerializer, UsuarioSerializer, DireccionSerializer, CompraSerializer
+from .serializer import ProductoSerializer, UsuarioSerializer, DireccionSerializer, CompraSerializer, UsuarioLoginSerializer
 from rest_framework  import generics
 
 #imports para class UsuarioList Y UsuarioDetail
@@ -30,7 +30,7 @@ class UsuarioList(APIView):
         return Response(serializer.data)
     
     #Metodo POST
-    def post(self, request. format=None):
+    def post(self, request, format=None):
         serializer = UsuarioSerializer(data=request.data)
         if serializer.is_valid():
             #Validar si usuario por registrar ya existe en la base de datos
@@ -66,8 +66,8 @@ class UsuarioLogin(APIView):
         return Response(serializer.data)
     
     #Metodo POST
-    def post(self, request. format=None):
-        serializer = UsuarioSerializer(data=request.data)
+    def post(self, request, format=None):
+        serializer = UsuarioLoginSerializer(data=request.data)
         if serializer.is_valid():
             #Validar si usuario por loguear ya existe en la base de datos
             existencia = Usuario.objects.filter(correo=serializer.validated_data['correo']).exists() 
@@ -75,17 +75,22 @@ class UsuarioLogin(APIView):
         
             #Si existe regresar serializer con datos usuario
             if existencia:
-                banderaExist = 1
-                usuario = Usuario.objects.get(correo=serializer.validated_data['correo'])
-                serializer = UsuarioSerializer(usuario)
-                return Response(serializer.data)
+                usuario = Usuario.objects.filter(correo=serializer.validated_data['correo'], contraseña=serializer.validated_data['contraseña'])
+                if(usuario):
+                    banderaExist = 1
+                    usuario = Usuario.objects.get(correo=serializer.validated_data['correo'])
+                    serializer = UsuarioSerializer(usuario)
+                    return Response(serializer.data)
+                else:
+                    banderaExist = 2
+                    return Response(banderaExist)
 
             #Si no existe regresar una bandera con valor de 0 
             else:
                 banderaExist = 0
                 return Response(banderaExist)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(3, status=status.HTTP_400_BAD_REQUEST)
 
 
 #Clases para vistas Direcciones
