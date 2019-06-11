@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="css/login.css">
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/funciones.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap" rel="stylesheet"> 
     <title>Document</title>
 </head>
@@ -20,9 +20,9 @@
             <div class="col-lg-3 div-form" id="div-form-login">
                 <h1>Iniciar sesión</h1>
                 <p>Completa los siguientes campos para iniciar sesión</p>
-                <form action="" class="form">
-                    <input type="text" placeholder="Correo:">
-                    <input type="password" placeholder="Contraseña:">
+                <form action="" class="form" id="form">
+                    <input type="email" placeholder="Correo:" id="correo">
+                    <input type="password" placeholder="Contraseña:" id="contraseña">
                     <button type="submit" class="boton">Iniciar sesión</button>
                     <a href="registro.html">¿Todavía no está registrado?</a>
                 </form>
@@ -31,3 +31,45 @@
     </div>
 </body>
 </html>
+
+<script>
+
+    
+    const form = document.getElementById('form');
+    const URL = 'http://localhost:8000/usuariosLogin/';
+    form.addEventListener('submit', async (e) =>{
+        e.preventDefault();
+
+        let data = new FormData();
+        data.append('correo', document.getElementById('correo').value);
+        data.append('contraseña', document.getElementById('contraseña').value);
+
+        const response = await mandarData(URL, data);
+        switch (response) {
+            case 0:
+                alert('Correo o contraseña incorrectos');
+            break;
+            
+            case 2:
+                alert('Correo o contraseña incorrectos');
+            break;
+
+            case 3:
+                alert('Falta uno o más campos por completar');
+            break;
+        
+            default:
+                let usuario = JSON.stringify(response);
+                localStorage.setItem('usuario', usuario)
+                console.log(localStorage.getItem('usuario'));
+                alert('Éxito');
+            break;
+        }
+        console.log(response);
+        // if(response.errors.length > 0){
+        //     response.errors.forEach(element => {
+        //         console.log(element);
+        //     });
+        // }
+    });
+</script>

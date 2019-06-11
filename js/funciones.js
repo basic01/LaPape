@@ -1,3 +1,17 @@
+
+//-------------------------------------Inicio funcionalidades generales--------------------------
+async function mandarData(url, data){
+    const response = await fetch(url, {
+        method: 'POST',
+        body: data
+    })
+    const resp = await response.json();
+    return resp;
+}
+//-------------------------------------Fin funcionalidades generales------------------------------------
+
+
+
 // ------------------------------------INICIO funcionalidad nav---------------------------
 
 function mostrarEsconder(divId){
@@ -25,7 +39,6 @@ function navegarCompra(liga){
         alert('No hay artículos que comprar');
     }
 }
-
 
 // ------------------------------------Fin funcionalidad nav---------------------------
 
