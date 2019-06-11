@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="div"></div>
+</body>
+</html>
+<script>
+    
+    const form = new FormData();
+    form.append('nombre', 'Lápiz no.2');
+    form.append('descripcion', 'Este es un lápiz No.2');
+    form.append('imagen', 'https://www.kalamazoo.es/content/images/product/31350_1_xnl.jpg')
+    form.append('precio', 4.00)
+    form.append('categoria', 'Accesorios');
+
+    async function mandarData(url, data){
+			const response = await fetch(url, {
+				method: 'POST',
+				body: data
+			})
+			const resp = await response.json();
+		}
+
+    mandarData('http://127.0.0.1:8000/productos/', form);
+</script>
