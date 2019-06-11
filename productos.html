@@ -22,6 +22,28 @@
     </div>
 
     <div class="shopping-cart">
+        <div id="shopping-cart-items">
+            
+        </div>
+
+        <div class="shopping-cart-total">
+            <div class="shopping-cart-total-subtotal total-data">
+                <h4>Subtotal:</h4>
+                <p>$<span id="subtotal">0.00</span></p>
+            </div>
+            <div class="shopping-cart-total-envio total-data">
+                <h4>Envío:</h4>
+                <p>$<span id="envio">0.00</span></p>
+            </div>
+            <div class="shopping-cart-total-total total-data">
+                <h3>Total:</h3>
+                <p>$<span id="total">0.00</span></p>
+            </div>
+        </div>
+        <div class="shopping-cart-options">
+            <button id="clear" class="boton">Vaciar</button>
+            <button id="shop" class="boton">Comprar</button>
+        </div>
 
     </div>
 
@@ -31,7 +53,8 @@
                 <div class="row tarjetas" id="tarjetas">
                     <h1>Productos disponibles</h1>
 
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+
+                    <!-- <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                         <div class="tarjeta" id="tarjeta1">
                             <a href="producto.html" class="enlaceProducto">
                                 <input type="hidden" name="" value=1>
@@ -47,21 +70,7 @@
                         </div>
                     </div>
 
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                        <div class="tarjeta" id="tarjeta2">
-                            <a href="producto.html" class="enlaceProducto">
-                                <h3 class="nombre">Lápiz no.3</h3>
-                                <img src="img/lapiz2.png" alt="" class="imagen">
-                                <label class="costo">$20.00</label>
-                            </a>
-                            <div class="cantidad">
-                                <h4>Cantidad:</h4>
-                                <input type="number" name="" id="" class="cant">
-                            </div>
-                            <button class="boton btnTarjeta" >Agregar a carrito</button>
-                        </div>
-                    </div>
-            
+                    
 
 
                     <script>
@@ -92,8 +101,19 @@
                                     precio: precio,
                                     cantidad: cantidad
                                 };
-
-                                
+                            
+                            document.getElementById('shopping-cart-items').innerHTML += 
+                                `
+                                <div class="shopping-cart-item">
+                                    <img src=${imagen} alt="" class="shopping-cart-item-img">
+                                    <div class="shopping-cart-item-data">
+                                        <p class="shopping-cart-item-nombre">${nombre}</p>
+                                        <p class="shopping-cart-item-precio">Precio: $${precio}</p>
+                                        <p class="shopping-cart-item-cantidad">Cantidad: ${cantidad}</p>
+                                    </div>
+                                    <i class="fas fa-trash"></i>
+                                </div>
+                                `;
                                 
                             }
                             else{
@@ -101,7 +121,7 @@
                             }
                         }
 
-                    </script>
+                    </script> -->
                 
                 </div>
             </div>
@@ -110,8 +130,9 @@
 </body>
 </html>
 <script>
-    const url = 'http://127.0.0.1:8000/productos/';
 
+    //Obtener datos de API y poner en tarjetas
+    const url = 'http://127.0.0.1:8000/productos/';
     async function obtenerData (url, divId){
         const response = await fetch(url);
         const data = await response.json();
@@ -120,11 +141,11 @@
             div.innerHTML += `
                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                     <div class="tarjeta" id="tarjeta1">
-                        <a href="producto.html" class="enlaceProducto">
+                        <a href="producto.html?e=${element.id}" class="enlaceProducto">
                             <input type="hidden" class="idProducto" name="" value=${element.id}>
                             <h3 class="nombre">${element.nombre}</h3>
                             <img src=${element.imagen} alt="" class="imagen">
-                            <label class="costo">$${element.precio}</label>
+                            <label>$<span class="costo">${element.precio}</span></label>
                         </a>
                         <div class="cantidad">
                             <h4>Cantidad:</h4>
@@ -137,30 +158,121 @@
         });
     }
 
-    //obtenerData(url, 'tarjetas');
+    //Función para llamar funciones asíncronas
+    async function work(){
+        await obtenerData(url, 'tarjetas');
+        await addBtnFunctionality();
+    }
+    
+    work();
 
     //Agregar funcionalidad a botones de cada tarjeta
-    // let btns = document.getElementsByClassName('btnTarjeta');
-    // for (let index = 0; index < btns.length; index++) {
-    //     btns[index].addEventListener('click', agregarCarrito);;
-    // }
+    function addBtnFunctionality(){
+        let btns = document.getElementsByClassName('btnTarjeta');
+        for (let index = 0; index < btns.length; index++) {
+            btns[index].addEventListener('click', agregarCarrito);
+        }
+    }
     
-    // cont = 0;
-    // function agregarCarrito (){
-    //     //Obtener div padre (div.tarjeta)
-    //     const div = event.target.parentElement;
-    //     //Obtener valores de la tarjeta seleccionada
-    //     const nombre = div.getElementsByClassName('nombre')[0].innerText;
-    //     const imagen = div.getElementsByClassName('imagen')[0].src;
-    //     const precio = div.getElementsByClassName('costo')[0].innerText;
-    //     const cantidad = div.getElementsByClassName('cant')[0].value;
-    //     cont++;
-    //     const id = cont;
-    //     console.log(id);
-    //     console.log(nombre);
-    //     console.log(imagen);
-    //     console.log(precio);
-    //     console.log(cantidad);
-    // }
+    //Borrar item de carrito
+    function deleteItem(){
+        const div = event.target.parentElement;
+        div.parentNode.removeChild(div);
+        datosDineroCompra();
+    }
+
+    async function datosDineroCompra(){
+        const subtotal = document.getElementById('subtotal');
+        const envio = document.getElementById('envio');                
+        const total = document.getElementById('total');
+        const sub = await obtenerSubtotal();
+        const tot = sub + 50;
+        subtotal.innerText = sub;
+        if(sub == 0){
+            envio.innerText = 0.00;
+            total.innerText = 0.00;
+        }
+        else{
+            envio.innerText = 50.00;
+            total.innerText = tot;
+        }
+        
+    }
+
+    //Agregar item a carrito
+    async function agregarCarrito(){
+        //Obtener div padre (div.tarjeta)
+        const div = event.target.parentElement;
+        //Obtener valores de la tarjeta seleccionada
+        const cantidad = div.getElementsByClassName('cant')[0].value;
+        const id = div.getElementsByClassName('idProducto')[0].value;
+        if(cantidad>0){
+            const banderaItemExiste = await validarItemCarrito(id);
+            if(!banderaItemExiste){
+                const nombre = div.getElementsByClassName('nombre')[0].innerText;
+                const imagen = div.getElementsByClassName('imagen')[0].src;
+                const precio = div.getElementsByClassName('costo')[0].innerText;
+                
+                // let cartItem = {
+                //     id: id,
+                //     nombre: nombre,
+                //     imagen: imagen,
+                //     precio: precio,
+                //     cantidad: cantidad
+                // };
+            
+                //Crear item y agrergarlo a carrito
+                document.getElementById('shopping-cart-items').innerHTML += 
+                    `
+                    <div class="shopping-cart-item">
+                        <img src=${imagen} alt="" class="shopping-cart-item-img">
+                        <div class="shopping-cart-item-data">
+                            <input type="hidden" class="idItem" name="" value=${id}>
+                            <p class="shopping-cart-item-nombre">${nombre}</p>
+                            <p class="shopping-cart-item-precio">Precio: $<span class="cart-item-precio">${precio}</span></p>
+                            <p class="shopping-cart-item-cantidad">Cantidad: <span class="cart-item-cantidad">${cantidad}</span></p>
+                        </div>
+                        <i class="fas fa-trash eliminarItem" onclick="deleteItem()"></i>
+                    </div>
+                `;
+                datosDineroCompra();
+            }
+
+            else{
+                alert('Elemento ya está en el carrito');
+            }   
+        }
+        else{
+            alert('no hay cantidad');
+        }
+    }
+
+    //Función para validar si ya está el item en el carrito
+    async function validarItemCarrito(idItem){
+        let bandera = false;
+        const items = await document.querySelectorAll('.shopping-cart-item');
+        items.forEach(element => {
+            const id = element.getElementsByClassName('idItem')[0].value;
+            if(idItem == id){
+                bandera = true;
+            }
+        });
+        
+        return bandera;
+    }
+
+    async function obtenerSubtotal(){
+        const items = await document.querySelectorAll('.shopping-cart-item');
+        let subtotal = 0;
+        items.forEach(element => {
+            let precio = element.getElementsByClassName('cart-item-precio')[0].innerText;
+            let cantidad = element.getElementsByClassName('cart-item-cantidad')[0].innerText;
+            cantidad = parseInt(cantidad);
+            precio = parseFloat(precio);
+            subtotal += cantidad * precio;
+        });
+        
+        return subtotal;
+    }
 
 </script>
