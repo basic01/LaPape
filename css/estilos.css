@@ -53,7 +53,7 @@ h3, h4, h1{
     top: 0;
     height: 5em;
     left: 0;
-    z-index: 999;
+    z-index: 998;
 }
 
 .top h1{
@@ -83,10 +83,9 @@ h3, h4, h1{
     transition: .9s all;
 }
 
-
 .shopping-cart{
     position: fixed;
-    z-index: 999;
+    z-index: 998;
     right: calc(5% + .5em);
     top: 5em;
     background-color:#F8F8F8;
@@ -223,3 +222,6 @@ a:hover{
 }
 
 
+.cancelar{
+    background-color: #FA5A56;
+}

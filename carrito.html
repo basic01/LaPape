@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="css/carrito.css">
+    <link rel="stylesheet" href="css/modal.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap" rel="stylesheet"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/funciones.js"></script>
@@ -15,84 +16,55 @@
 </head>
 <body>
 
+    <div class="fondoPopUp container-fluid" id="fondoPopUp">
+        <div class="row">
+            <div class="popUp">
+                <h4>La Pape</h4>
+                <p id="mensajePopUp">El carrito de compras ya está vacío </p>
+                <button class="boton" onclick="esconderPopUp()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+
     <div class="top">
         <a href="productos.html"><h1>La Pape</h1></a>
         <div class="opciones">
             <i class="fas fa-user"></i>
-            <i class="fas fa-shopping-cart" id="cart-icon" onclick="mostrarEsconder('shopping-cart')"></i>
+            <i class="fas fa-shopping-cart" id="cart-icon" onclick="navegar('carrito.html')"></i>
         </div>  
     </div>
 
-    <div class="shopping-cart" id="shopping-cart">
-    <div id="shopping-cart-items">
-        
-    </div>
-
-    <div class="shopping-cart-total">
-        <div class="shopping-cart-total-subtotal total-data">
-            <h4>Subtotal:</h4>
-            <p>$<span id="subtotal">0.00</span></p>
-        </div>
-        <div class="shopping-cart-total-envio total-data">
-            <h4>Envío:</h4>
-            <p>$<span id="envio">0.00</span></p>
-        </div>
-        <div class="shopping-cart-total-total total-data">
-            <h3>Total:</h3>
-            <p>$<span id="total">0.00</span></p>
-        </div>
-        </div>
-        <div class="shopping-cart-options">
-            <button id="clear" class="boton" onclick="vaciarCarrito()">Vaciar</button>
-            <button id="shop" class="boton" onclick="navegarCompra('carrito.html')">Comprar</button>
-        </div>
-
-    </div>
 
     <div class="container-fluid contenedor">  
         <div class="row row1">
-
-            <div class="col-lg-2 col-md-1"></div>
-
-            <div class="col-lg-5 col-md-6 col-12">
-                <div class="carrito">
-                    <h1>Carrito de compras</h1>
-                    <div class="articulos row">
-
-                        <div class="col-lg-12 col-sm-12 col-md-12">
-                            <div class="articulo row" id="items">
-
-                            </div>
-                        </div>
-                        
-                    </div>  
-                </div>  
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-12">
-                <div class="cuenta">
-                    <h1>Pedido</h1>
-                    <div class="pedido">
-                        <div class="dato-pedido">
-                            <label>Subtotal:</label>
-                            <p>$<span id="pedido-subtotal">0.00</span></p>
-                        </div>
-                        <div class="dato-pedido">
-                            <label>Envío</label>
-                            <p>$<span id="pedido-envio">0.00</span></p>
-                        </div>
-                        <div class="dato-pedido total">
-                            <label>Total</label>
-                            <p>$<span id="pedido-total">0.00</span></p>
-                        </div>
-                        
-                        <a href="#" class="boton">Finalizar compra</a>
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <div class="shopping-cart" id="shopping-cart">
+                    <div id="shopping-cart-items">
                         
                     </div>
+                
+                    <div class="shopping-cart-total">
+                        <div class="shopping-cart-total-subtotal total-data">
+                            <h4>Subtotal:</h4>
+                            <p>$<span id="subtotal">0.00</span></p>
+                        </div>
+                        <div class="shopping-cart-total-envio total-data">
+                            <h4>Envío:</h4>
+                            <p>$<span id="envio">0.00</span></p>
+                        </div>
+                        <div class="shopping-cart-total-total total-data">
+                            <h3>Total:</h3>
+                            <p>$<span id="total">0.00</span></p>
+                        </div>
+                    </div>
+                    <div class="shopping-cart-options">
+                        <button id="clear" class="boton cancelar" onclick="vaciarCarrito()">Vaciar</button>
+                        <button id="shop" class="boton" onclick="navegarCompra('envio.html')">Comprar</button>
+                    </div>
+                
                 </div>
             </div>
-
-
         </div>
     </div>
 </body>
@@ -101,10 +73,11 @@
 <script>
     async function work(){
         await obtenerItemsCarrito();
-        await mostrarItems();
-        await mostrarTotales('pedido-subtotal', 'pedido-envio', 'pedido-total');
+        //await mostrarItems();
+        // await mostrarTotales('pedido-subtotal', 'pedido-envio', 'pedido-total');
     }
     
     work();
 
 </script>
+

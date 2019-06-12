@@ -17,12 +17,13 @@
             <img src="img/fondo2.png" alt="">
         </div>
         <div class="row">
-            <div class="col-lg-3 div-form" id="div-form-login">
+            <div class="col-lg-3 col-md-4 col-sm-6 div-form" id="div-form-login">
                 <h1>Iniciar sesión</h1>
                 <p>Completa los siguientes campos para iniciar sesión</p>
                 <form action="" class="form" id="form">
                     <input type="email" placeholder="Correo:" id="correo">
                     <input type="password" placeholder="Contraseña:" id="contraseña">
+                    <p class="error" id="error"></p>
                     <button type="submit" class="boton">Iniciar sesión</button>
                     <a href="registro.html">¿Todavía no está registrado?</a>
                 </form>
@@ -33,9 +34,9 @@
 </html>
 
 <script>
-
     
     const form = document.getElementById('form');
+    const error = document.getElementById('error');
     const URL = 'http://localhost:8000/usuariosLogin/';
     form.addEventListener('submit', async (e) =>{
         e.preventDefault();
@@ -47,29 +48,30 @@
         const response = await mandarData(URL, data);
         switch (response) {
             case 0:
-                alert('Correo o contraseña incorrectos');
+                error.style.display = 'block';
+                error.innerText = 'Correo o contraseña incorrectos';
             break;
             
             case 2:
-                alert('Correo o contraseña incorrectos');
+                error.style.display = 'block';
+                error.innerText = 'Correo o contraseña incorrectos';
             break;
 
             case 3:
-                alert('Falta uno o más campos por completar');
+                error.style.display = 'block';
+                error.innerText = 'Uno o más campos vacíos';
             break;
         
             default:
+                error.style.display = 'none';
+                error.innerText = '';
+
                 let usuario = JSON.stringify(response);
                 localStorage.setItem('usuario', usuario)
                 console.log(localStorage.getItem('usuario'));
-                alert('Éxito');
+                navegar('productos.html');
             break;
         }
-        console.log(response);
-        // if(response.errors.length > 0){
-        //     response.errors.forEach(element => {
-        //         console.log(element);
-        //     });
-        // }
+
     });
 </script>

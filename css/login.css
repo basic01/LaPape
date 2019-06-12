@@ -39,6 +39,7 @@
     width: 100%;
     padding: 10px;
     margin-bottom: 1em;
+    color: rgba(0,0,0,.8);
     border-radius: 5px;
     border: 1px solid rgba(0,0,0,.3);
     /* background-color: rgba(0,0,0,.03); */
@@ -48,4 +49,14 @@
     text-align: center;
     width: 100%;
     display: block;
+    color: #007BFF;
 }
+
+
+.error{
+    color: #FA5A56 !important;
+    font-size: .9em;
+    display: none;
+    font-weight: normal !important;
+}
+

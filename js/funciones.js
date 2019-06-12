@@ -8,6 +8,56 @@ async function mandarData(url, data){
     const resp = await response.json();
     return resp;
 }
+
+function navegar(liga){
+    window.location.assign(liga);
+}
+
+
+function mostrar(divId){
+    div = document.getElementById(divId);
+    div.style.display = 'block';
+}
+
+function esconder(divId){
+    div = document.getElementById(divId);
+    div.style.display = 'none';
+}
+
+function mostrarPopUp(mensaje){
+    div = document.getElementById('fondoPopUp');
+    div.style.display = 'flex';
+    document.getElementById('mensajePopUp').innerText = mensaje;
+}
+
+function esconderPopUp(){
+    esconder('fondoPopUp');
+    document.getElementById('mensajePopUp').innerText = "";
+}
+
+//Convertir div en imagen y esa imagen en PDF
+function getPDF(divId){
+    let div = document.getElementById(divId);
+    domtoimage.toPng(div)
+    .then(function(dataUrl){
+        //Crear imagen y asignarle como src el div convertido a imagen
+        let img = new Image();
+        img.src = dataUrl;
+
+        //Settings PDF
+        const wid = div.offsetWidth - 40;
+        const hgt = div.offsetHeight - 75;
+        const hratio = hgt/wid;
+        let doc = new jsPDF();
+        const width = doc.internal.pageSize.getWidth();  
+        const height = width * hratio;
+        doc.addImage(img.src, 'JPEG', 20, 10, width-40, height);
+        doc.save('LaPape.pdf');
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+}
 //-------------------------------------Fin funcionalidades generales------------------------------------
 
 
@@ -26,17 +76,14 @@ function mostrarEsconder(divId){
     }   
 }
 
-function navegar(liga){
-    window.location.assign(liga);
-}
-
 function navegarCompra(liga){
     if(localStorage.getItem('totales')){
-        const url = liga + '?carrito=T';
-        navegar(url);
+        // const url = liga + '?carrito=T';
+        navegar(liga);
     }
     else{
-        alert('No hay artículos que comprar');
+        mostrarPopUp('No hay artículos que comprar');
+        // alert('No hay artículos que comprar');
     }
 }
 
@@ -55,10 +102,14 @@ function navegarCompra(liga){
 
     //Vaciar carrito
     async function vaciarCarrito(){
+        if(document.getElementById('subtotal').innerText == "0.00"){
+            mostrarPopUp('Carrito de compras está vacío');
+            // alert('Carrito está vacío');
+        }
         document.getElementById('shopping-cart-items').innerHTML = "";
         await datosDineroCompra();
         await guardarCarrito();
-        await actualizarTotales();
+        //await actualizarTotales();
     }
 
     //Borrar item de carrito
@@ -67,7 +118,7 @@ function navegarCompra(liga){
         div.parentNode.removeChild(div);
         await datosDineroCompra();
         await guardarCarrito();
-        await actualizarTotales();
+        //await actualizarTotales();
     }
 
 
@@ -131,11 +182,19 @@ function navegarCompra(liga){
             }
 
             else{
-                alert('Elemento ya está en el carrito');
+                mostrarPopUp('Elemento ya está en el carrito');
+                // alert('Elemento ya está en el carrito');
             }   
         }
         else{
-            alert('no hay cantidad');
+            if(cantidad == ""){
+                mostrarPopUp('Ingrese una cantidad');
+                // alert('Ingrese una cantidad');
+            }
+            else{
+                mostrarPopUp('Ingrese una cantidad válida');
+                // alert('Cantidad inválida');
+            }
         }
     }
 
@@ -241,64 +300,23 @@ function navegarCompra(liga){
     }
 
 
-// ------------------------------------Fin funcionalida carrito---------------------------
-
-
-
-// ------------------------------------INCIO funcionalidad carrito.html---------------------------
-
-async function mostrarTotales(idSubtotal, idEnvio, idTotal){
-    let totales = await localStorage.getItem('totales');
-    if(totales){
-        totales = JSON.parse(totales);
-        const subtotal = totales.subtotal;
-        const envio = totales.envio;
-        const total = totales.total;
-        document.getElementById(idSubtotal).innerText = subtotal;
-        document.getElementById(idEnvio).innerText = envio;
-        document.getElementById(idTotal).innerText = total;
-    }
-    else{
-        document.getElementById(idSubtotal).innerText = "0.00";
-        document.getElementById(idEnvio).innerText = "0.00";
-        document.getElementById(idTotal).innerText = "0.00";
-    }
-}
-
-async function actualizarTotales(){
-    const url_string = window.location.href;
-    const direccion = new URL(url_string);
-    const parametro = direccion.searchParams.get('carrito');
-    if(parametro == 'T'){
-        await mostrarTotales('pedido-subtotal', 'pedido-envio', 'pedido-total');
-    }
-}
-
-async function mostrarItems(){
-    const div = document.getElementById('items');
-
-    let carrito = await localStorage.getItem('carrito');
-        if(carrito){
-            carrito = JSON.parse(carrito);
-
-            carrito.forEach(element => {
-
-            div.innerHTML += `
-                <div class="itemDiv">
-                    <img src=${element.imagen} alt="" class="shopping-cart-item-img">
-                    <div class="shopping-cart-item-data">
-                        <input type="hidden" class="idItem" name="" value=${element.id}>
-                        <p class="shopping-cart-item-nombre">${element.nombre}</p>
-                        <p class="shopping-cart-item-precio">Precio: $<span class="cart-item-precio">${element.precio}</span></p>
-                        <p class="shopping-cart-item-cantidad">Cantidad: <span class="cart-item-cantidad">${element.cantidad}</span></p>
-                    </div>
-                    <i class="fas fa-trash eliminarItem"></i>
-                </div>
-            
-            `;
-            });
+    async function mostrarTotales(idSubtotal, idEnvio, idTotal){
+        let totales = await localStorage.getItem('totales');
+        if(totales){
+            totales = JSON.parse(totales);
+            const subtotal = totales.subtotal;
+            const envio = totales.envio;
+            const total = totales.total;
+            document.getElementById(idSubtotal).innerText = subtotal;
+            document.getElementById(idEnvio).innerText = envio;
+            document.getElementById(idTotal).innerText = total;
         }
-}
+        else{
+            document.getElementById(idSubtotal).innerText = "0.00";
+            document.getElementById(idEnvio).innerText = "0.00";
+            document.getElementById(idTotal).innerText = "0.00";
+        }
+    }
 
 
-// ------------------------------------Fin funcionalida carrito.html---------------------------
+// ------------------------------------Fin funcionalida carrito---------------------------

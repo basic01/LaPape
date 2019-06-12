@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="css/producto.css">
+    <link rel="stylesheet" href="css/modal.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap" rel="stylesheet"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/funciones.js"></script>
@@ -15,35 +16,45 @@
 </head>
 <body>
 
+    <div class="fondoPopUp container-fluid" id="fondoPopUp">
+        <div class="row">
+            <div class="popUp">
+                <h4>La Pape</h4>
+                <p id="mensajePopUp">El carrito de compras ya está vacío </p>
+                <button class="boton" onclick="esconderPopUp()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
     <div class="top">
         <a href="productos.html"><h1>La Pape</h1></a>
         <div class="opciones">
             <i class="fas fa-user"></i>
-            <i class="fas fa-shopping-cart" id="cart-icon" onclick="mostrarEsconder('shopping-cart')"></i>
+            <i class="fas fa-shopping-cart" id="cart-icon" onclick="mostrarEsconder('shopping-cart')" onmouseover="mostrar('shopping-cart')"></i>
         </div>  
     </div>
 
     <div class="shopping-cart" id="shopping-cart">
-    <div id="shopping-cart-items">
-        
-    </div>
+        <div id="shopping-cart-items">
+            
+        </div>
 
-    <div class="shopping-cart-total">
-        <div class="shopping-cart-total-subtotal total-data">
-            <h4>Subtotal:</h4>
-            <p>$<span id="subtotal">0.00</span></p>
-        </div>
-        <div class="shopping-cart-total-envio total-data">
-            <h4>Envío:</h4>
-            <p>$<span id="envio">0.00</span></p>
-        </div>
-        <div class="shopping-cart-total-total total-data">
-            <h3>Total:</h3>
-            <p>$<span id="total">0.00</span></p>
-        </div>
+        <div class="shopping-cart-total">
+            <div class="shopping-cart-total-subtotal total-data">
+                <h4>Subtotal:</h4>
+                <p>$<span id="subtotal">0.00</span></p>
+            </div>
+            <div class="shopping-cart-total-envio total-data">
+                <h4>Envío:</h4>
+                <p>$<span id="envio">0.00</span></p>
+            </div>
+            <div class="shopping-cart-total-total total-data">
+                <h3>Total:</h3>
+                <p>$<span id="total">0.00</span></p>
+            </div>
         </div>
         <div class="shopping-cart-options">
-            <button id="clear" class="boton" onclick="vaciarCarrito()">Vaciar</button>
+            <button id="clear" class="boton cancelar" onclick="vaciarCarrito()">Vaciar</button>
             <button id="shop" class="boton" onclick="navegarCompra('carrito.html')">Comprar</button>
         </div>
 
