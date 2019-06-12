@@ -29,8 +29,15 @@
     <div class="top">
         <a href="productos.html"><h1>La Pape</h1></a>
         <div class="opciones">
-            <i class="fas fa-user"></i>
-            <i class="fas fa-shopping-cart" id="cart-icon" onclick="mostrarEsconder('shopping-cart')" onmouseover="mostrar('shopping-cart')"></i>
+            <script>
+                if(localStorage.getItem('usuario')){
+                    document.querySelector('.opciones').innerHTML += `<i class="fas fa-door-open" onclick="cerrarSesion()"></i>`;
+                }
+                else{
+                    document.querySelector('.opciones').innerHTML += `<i class="fas fa-user" onclick="navegar('login.html')"></i>`;
+                }    
+            </script>
+            <i class="fas fa-shopping-cart" id="cart-icon" onclick="mostrarEsconder('shopping-cart')"></i>
         </div>  
     </div>
 

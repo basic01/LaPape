@@ -15,6 +15,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
     <title>La Pape</title>
+    <script>
+        validarUsuarioyCarrito();
+    </script>
 </head>
 <body>
 
@@ -31,8 +34,15 @@
     <div class="top">
         <a href="productos.html"><h1>La Pape</h1></a>
         <div class="opciones">
-            <i class="fas fa-user"></i>
-            <i class="fas fa-shopping-cart" id="cart-icon" onclick="mostrarEsconder('shopping-cart')" onmouseover="mostrar('shopping-cart')"></i>
+            <script>
+                if(localStorage.getItem('usuario')){
+                    document.querySelector('.opciones').innerHTML += `<i class="fas fa-door-open" onclick="cerrarSesion()"></i>`;
+                }
+                else{
+                    document.querySelector('.opciones').innerHTML += `<i class="fas fa-user" onclick="navegar('login.html')"></i>`;
+                }    
+            </script>
+            <i class="fas fa-shopping-cart" id="cart-icon" onclick="mostrarEsconder('shopping-cart')"></i>
         </div>  
     </div>
 
@@ -66,7 +76,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="row rowTicket">
-                    <div class="col-lg-6 col-md-7 col-sm-10 col-11 divTicket">
+                    <div class="col-lg-6 col-md-7 col-sm-10 col-12 divTicket">
                         <div class="ticket" id="ticket">
                             <div class="header">
                                 <h3>La Pape</h3>

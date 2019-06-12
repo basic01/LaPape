@@ -13,7 +13,6 @@ function navegar(liga){
     window.location.assign(liga);
 }
 
-
 function mostrar(divId){
     div = document.getElementById(divId);
     div.style.display = 'block';
@@ -61,6 +60,19 @@ function getPDF(divId){
 //-------------------------------------Fin funcionalidades generales------------------------------------
 
 
+//Validar si usuario existe
+function validarUsuario(){
+    if(!localStorage.getItem('usuario')){
+        navegar('login.html');
+    }
+}
+
+
+function validarUsuarioyCarrito(){
+    if(!localStorage.getItem('carrito') || !localStorage.getItem('usuario')){
+        navegar('productos.html');
+    }
+}
 
 // ------------------------------------INICIO funcionalidad nav---------------------------
 
@@ -76,6 +88,7 @@ function mostrarEsconder(divId){
     }   
 }
 
+//Validar si hay items por comprar en el carrito
 function navegarCompra(liga){
     if(localStorage.getItem('totales')){
         // const url = liga + '?carrito=T';
@@ -85,6 +98,26 @@ function navegarCompra(liga){
         mostrarPopUp('No hay artículos que comprar');
         // alert('No hay artículos que comprar');
     }
+}
+
+//Validar si al hacer la compra hay un usuario
+function navegarCompraFinal(liga){
+    if(localStorage.getItem('totales')){
+        if(localStorage.getItem('usuario')){
+            navegar(liga);
+        }
+        else{
+            navegar('login.html');
+        }
+    }
+    else{
+        mostrarPopUp('No hay artículos que comprar');
+    }
+}
+
+function cerrarSesion(){
+    localStorage.clear();
+    navegar('productos.html');
 }
 
 // ------------------------------------Fin funcionalidad nav---------------------------

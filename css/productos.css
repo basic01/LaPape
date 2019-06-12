@@ -1,11 +1,18 @@
 .contenedor{
-    margin-top: 7em;
+    margin-top: 5em;
 }
 
 /*-- tarjetas --*/
 .tarjetas{
-    width: 90%;
-    margin: 2em 5%;
+    width: 94%;
+    margin: 2em 3% !important;
+}
+
+@media (max-width:500px){
+    .tarjetas{
+        width: 100%;
+        margin: 2em 0 !important;
+    }
 }
 
 .tarjetas h1{

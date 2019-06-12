@@ -70,6 +70,27 @@ h3, h4, h1{
     margin-right: calc(5% + .5em);
 }
 
+@media (max-width:500px){
+    body{
+        font-size: .9em;
+    }
+    .top h1{
+        font-size: 1.5em;
+    }
+
+    .top .opciones{
+        margin-right: 0;
+    }
+
+    .top .opciones i{
+        padding: 1.4em 1em;
+        float: left;
+    }
+    #shopping-cart{
+        right: 0;
+    }
+}
+
 .opciones i{
     padding: 1.4em;
     cursor: pointer;
